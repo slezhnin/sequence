@@ -1,6 +1,7 @@
 package pro.sergejle.sequence.iterable;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LimitingIterable<T> extends WrappingIterable<T> {
 
@@ -11,6 +12,7 @@ public class LimitingIterable<T> extends WrappingIterable<T> {
         final long limit
     ) {
         super(sourceIterable);
+        
         this.limit = limit;
     }
 
@@ -44,7 +46,7 @@ public class LimitingIterable<T> extends WrappingIterable<T> {
         @Override
         public T next() {
             if (counter <= 0) {
-                throw new IllegalStateException("Iterator has reached the limit of " + limit);
+                throw new NoSuchElementException("Iterator has reached the limit of " + limit);
             }
 
             --counter;

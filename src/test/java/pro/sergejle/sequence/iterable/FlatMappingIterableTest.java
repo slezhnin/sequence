@@ -9,7 +9,7 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import pro.sergejle.sequence.RandomUtils;
 
-class FlatMappingIterableTest extends BaseIterableTest {
+class FlatMappingIterableTest extends BaseUnitTestingIterable {
 
     @RepeatedTest(value = 5, name = RepeatedTest.LONG_DISPLAY_NAME)
     @DisplayName("Should return all iterables as one united iterable")

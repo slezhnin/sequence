@@ -9,7 +9,7 @@ import java.util.Spliterator;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-class WrappingIterableTest extends BaseIterableTest {
+class WrappingIterableTest extends BaseUnitTestingIterable {
 
     @Mock Iterable<Object> iterable;
 

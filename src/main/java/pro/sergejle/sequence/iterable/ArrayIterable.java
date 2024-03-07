@@ -2,6 +2,7 @@ package pro.sergejle.sequence.iterable;
 
 import static java.util.Objects.requireNonNull;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Spliterator;
 import java.util.Spliterators;
 
@@ -32,6 +33,10 @@ public class ArrayIterable<T> implements Iterable<T> {
 
         @Override
         public T next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+
             return array[index++];
         }
     }

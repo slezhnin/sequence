@@ -1,5 +1,6 @@
 package pro.sergejle.sequence;
 
+import static java.util.Objects.requireNonNull;
 import static java.util.function.Function.identity;
 import java.util.Map;
 import java.util.function.Function;
@@ -10,36 +11,49 @@ import pro.sergejle.sequence.iterable.WrappingIterable;
 interface MappingSequence<T> extends Iterable<T> {
 
     default <R> Sequence<R> map(final Function<? super T, ? extends R> mapper) {
+        requireNonNull(mapper);
+
         return Sequence.of(new MappingIterable<T, R>(this, mapper));
     }
 
     default <R> Sequence<R> flatMap(final Function<? super T, ? extends Iterable<? extends R>> mapper) {
+        requireNonNull(mapper);
+
         return Sequence.of(new FlatMappingIterable<>(this, mapper));
     }
 
     default <K, V> MapEntrySequence<K, V> mapEntry(
         final Function<? super T, ? extends Map.Entry<K, V>> mapper
     ) {
-        return new MapEntrySequence<K, V>(new MappingIterable<>(this, mapper));
+        requireNonNull(mapper);
+
+        return new MapEntrySequence<>(new MappingIterable<>(this, mapper));
     }
 
     default <K, V> MapEntrySequence<K, V> mapEntry(
         final Function<? super T, ? extends K> keyMapper,
         final Function<? super T, ? extends V> valueMapper
     ) {
+        requireNonNull(keyMapper);
+        requireNonNull(valueMapper);
+
         return mapEntry(t -> Map.entry(keyMapper.apply(t), valueMapper.apply(t)));
     }
 
     default <R> FlatMapSequence<R> mapIterable(
         final Function<? super T, ? extends Iterable<R>> mapper
     ) {
+        requireNonNull(mapper);
+
         return new FlatMapSequence<>(new MappingIterable<>(this, mapper));
     }
 
     default <K, V> MapEntrySequence<K, V> flatMapEntry(
         final Function<? super T, ? extends Sequence<? extends Map.Entry<K, V>>> mapper
     ) {
-        return new MapEntrySequence<K, V>(new FlatMappingIterable<>(this, mapper));
+        requireNonNull(mapper);
+
+        return new MapEntrySequence<>(new FlatMappingIterable<>(this, mapper));
     }
 
     class FlatMapSequence<T> extends WrappingIterable<Iterable<T>>
@@ -69,7 +83,7 @@ interface MappingSequence<T> extends Iterable<T> {
             final Function<? super K, ? extends R> keyMapper,
             final Function<? super V, ? extends U> valueMapper
         ) {
-            return new MapEntrySequence<R, U>(map(e -> Map.<R, U>entry(
+            return new MapEntrySequence<>(map(e -> Map.<R, U>entry(
                 keyMapper.apply(e.getKey()),
                 valueMapper.apply(e.getValue())
             )));

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pro.sergejle.sequence.RandomUtils;
 
-class SkippingIterableTest extends BaseIterableTest {
+class SkippingIterableTest extends BaseUnitTestingIterable {
 
     @Test
     @DisplayName("Should return entire result when skipping negative number")

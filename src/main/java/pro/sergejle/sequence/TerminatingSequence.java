@@ -3,13 +3,14 @@ package pro.sergejle.sequence;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Collections.unmodifiableMap;
 import static java.util.Collections.unmodifiableSet;
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.BiConsumer;
@@ -43,6 +44,8 @@ interface TerminatingSequence<T> extends Iterable<T> {
         final T identity,
         final BinaryOperator<T> accumulator
     ) {
+        requireNonNull(accumulator);
+        
         var result = identity;
         var foundIdentity = identity != null;
 
@@ -59,6 +62,8 @@ interface TerminatingSequence<T> extends Iterable<T> {
     }
 
     default Optional<T> reduce(final BinaryOperator<T> accumulator) {
+        requireNonNull(accumulator);
+
         return Optional.ofNullable(reduce(null, accumulator));
     }
 
@@ -66,7 +71,9 @@ interface TerminatingSequence<T> extends Iterable<T> {
         final U identity,
         final BiFunction<U, ? super T, U> accumulator
     ) {
-        U result = identity;
+        requireNonNull(accumulator);
+
+        var result = identity;
 
         for (T element : this) {
             result = accumulator.apply(result, element);
@@ -76,16 +83,22 @@ interface TerminatingSequence<T> extends Iterable<T> {
     }
 
     default <U> U reduce(final BiFunction<U, ? super T, U> accumulator) {
+        requireNonNull(accumulator);
+
         return reduce(null, accumulator);
     }
 
     default Optional<T> min(final Comparator<? super T> comparator) {
+        requireNonNull(comparator);
+
         return reduce((candidate, next) -> comparator.compare(next, candidate) < 0
             ? next
             : candidate);
     }
 
     default Optional<T> max(final Comparator<? super T> comparator) {
+        requireNonNull(comparator);
+
         return reduce((candidate, next) -> comparator.compare(next, candidate) > 0
             ? next
             : candidate);
@@ -96,6 +109,8 @@ interface TerminatingSequence<T> extends Iterable<T> {
     }
 
     default boolean anyMatch(final Predicate<? super T> predicate) {
+        requireNonNull(predicate);
+
         for (final var element : this) {
             if (predicate.test(element)) {
                 return true;
@@ -106,6 +121,8 @@ interface TerminatingSequence<T> extends Iterable<T> {
     }
 
     default boolean allMatch(final Predicate<? super T> predicate) {
+        requireNonNull(predicate);
+
         for (final var element : this) {
             if (!predicate.test(element)) {
                 return false;
@@ -116,6 +133,8 @@ interface TerminatingSequence<T> extends Iterable<T> {
     }
 
     default boolean noneMatch(final Predicate<? super T> predicate) {
+        requireNonNull(predicate);
+
         for (final var element : this) {
             if (predicate.test(element)) {
                 return false;
@@ -146,13 +165,13 @@ interface TerminatingSequence<T> extends Iterable<T> {
     default List<T> toMutableList() {
         final var arrayList = new ArrayList<T>();
 
-        forEach(t -> arrayList.add(t));
+        forEach(arrayList::add);
 
         return arrayList;
     }
 
-    default void forEach(BiConsumer<? super T, Integer> action) {
-        Objects.requireNonNull(action);
+    default void forEachIndex(BiConsumer<? super T, Integer> action) {
+        requireNonNull(action);
 
         var index = 0;
 

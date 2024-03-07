@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import pro.sergejle.sequence.RandomUtils;
 
-class ArrayIterableTest extends BaseIterableTest {
+class ArrayIterableTest extends BaseUnitTestingIterable {
 
     @RepeatedTest(value = 5, name = RepeatedTest.LONG_DISPLAY_NAME)
     @DisplayName("Iterator should return all array elements")

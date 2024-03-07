@@ -5,7 +5,7 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class FilteringIterableTest extends BaseIterableTest {
+class FilteringIterableTest extends BaseUnitTestingIterable {
 
     @Test
     @DisplayName("Should filter according to predicate")

@@ -1,13 +1,17 @@
 package pro.sergejle.sequence.iterable;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static pro.sergejle.sequence.RandomUtils.nextRandomList;
-import org.assertj.core.api.Assertions;
+
+import java.util.NoSuchElementException;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import pro.sergejle.sequence.RandomUtils;
 
-class LimitingIterableTest extends BaseIterableTest {
+class LimitingIterableTest extends BaseUnitTestingIterable {
 
     @Test
     @DisplayName("Should return empty result when limit to negative number")
@@ -32,7 +36,7 @@ class LimitingIterableTest extends BaseIterableTest {
     @Test
     @DisplayName("Should return subset when limit > 0 < size")
     void subList() {
-        final var source = nextRandomList(5, RandomUtils::nextInt);
+        final var source = nextRandomList(1, 5, RandomUtils::nextInt);
 
         final var actual = iterableToList(new LimitingIterable<>(source, 1));
 
@@ -54,12 +58,10 @@ class LimitingIterableTest extends BaseIterableTest {
     void exceed() {
         final var source = nextRandomList(5, RandomUtils::nextInt);
 
-        Assertions
-            .assertThatThrownBy(() -> {
-                new LimitingIterable<>(source, 0)
-                    .iterator()
-                    .next();
-            })
-            .isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> {
+            new LimitingIterable<>(source, 0)
+                .iterator()
+                .next();
+            }).isInstanceOf(NoSuchElementException.class); 
     }
 }

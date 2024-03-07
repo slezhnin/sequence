@@ -11,6 +11,7 @@ public class SkippingIterable<T> extends WrappingIterable<T> {
         final long nSkip
     ) {
         super(sourceIterable);
+        
         this.nSkip = nSkip;
     }
 

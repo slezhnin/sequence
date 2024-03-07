@@ -40,7 +40,8 @@ public class FlatMappingIterable<T, R> implements Iterable<R> {
                     current = mapper
                         .apply(iterator.next())
                         .iterator();
-                    if (current.hasNext()) { break; }
+                    
+                        if (current.hasNext()) { break; }
                 }
             }
 

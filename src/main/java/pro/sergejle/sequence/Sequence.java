@@ -23,14 +23,18 @@ public interface Sequence<T>
     static <T> Sequence<T> of(
         final Stream<T> sourceStream
     ) {
-        return new IterableSequence<>(new StreamIterable<>(requireNonNull(sourceStream)));
+        requireNonNull(sourceStream);
+        
+        return new IterableSequence<>(new StreamIterable<>(sourceStream));
 
     }
 
     static <T> Sequence<T> of(
         final Iterable<T> sourceIterable
     ) {
-        return new IterableSequence<>(requireNonNull(sourceIterable));
+        requireNonNull(sourceIterable);
+        
+        return new IterableSequence<>(sourceIterable);
     }
 
     @SafeVarargs
@@ -39,20 +43,26 @@ public interface Sequence<T>
     }
 
     static <T> Sequence<T> of(final T value) {
-        return new IterableSequence<>(List.of(requireNonNull(value)));
+        requireNonNull(value);
+        
+        return new IterableSequence<>(List.of(value));
     }
 
     static <K, V> MapEntrySequence<K, V> ofEntries(
         final Stream<Map.Entry<K, V>> sourceStream
     ) {
-        return new MapEntrySequence<>(new StreamIterable<>(requireNonNull(sourceStream)));
+        requireNonNull(sourceStream);
+
+        return new MapEntrySequence<>(new StreamIterable<>(sourceStream));
 
     }
 
     static <K, V> MapEntrySequence<K, V> ofEntries(
         final Iterable<Map.Entry<K, V>> sourceIterable
     ) {
-        return new MapEntrySequence<>(requireNonNull(sourceIterable));
+        requireNonNull(sourceIterable);
+
+        return new MapEntrySequence<>(sourceIterable);
     }
 
     @SafeVarargs
@@ -63,14 +73,18 @@ public interface Sequence<T>
     static <T> FlatMapSequence<T> ofIterables(
         final Stream<Iterable<T>> sourceStream
     ) {
-        return new FlatMapSequence<>(new StreamIterable<>(requireNonNull(sourceStream)));
+        requireNonNull(sourceStream);
+
+        return new FlatMapSequence<>(new StreamIterable<>(sourceStream));
 
     }
 
     static <T> FlatMapSequence<T> ofIterables(
         final Iterable<Iterable<T>> sourceIterable
     ) {
-        return new FlatMapSequence<>(requireNonNull(sourceIterable));
+        requireNonNull(sourceIterable);
+
+        return new FlatMapSequence<>(sourceIterable);
     }
 
     @SafeVarargs
@@ -90,13 +104,18 @@ public interface Sequence<T>
         final Supplier<? extends T> next,
         final Supplier<Boolean> hasNext
     ) {
-        return new IterableSequence<>(new GeneratedIterable<>(requireNonNull(next), requireNonNull(hasNext)));
+        requireNonNull(next);
+        requireNonNull(hasNext);
+
+        return new IterableSequence<>(new GeneratedIterable<>(next, hasNext));
     }
 
     static <T> Sequence<T> generate(
         final Supplier<? extends T> next
     ) {
-        return generate(requireNonNull(next), () -> true);
+        requireNonNull(next);
+
+        return generate(next, () -> true);
     }
 
     static <T> Sequence<T> empty() {
@@ -104,15 +123,19 @@ public interface Sequence<T>
     }
 
     default Sequence<T> append(final Iterable<T> extraIterable) {
+        requireNonNull(extraIterable);
+
         return new IterableSequence<>(new FlatMappingIterable<>(
-            of(this, requireNonNull(extraIterable)),
+            of(this, extraIterable),
             identity()
         ));
     }
 
     default Sequence<T> prepend(final Iterable<T> extraIterable) {
+        requireNonNull(extraIterable);
+
         return new IterableSequence<>(new FlatMappingIterable<>(
-            of(requireNonNull(extraIterable), this),
+            of(extraIterable, this),
             identity()
         ));
     }

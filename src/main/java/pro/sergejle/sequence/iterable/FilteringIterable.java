@@ -2,6 +2,7 @@ package pro.sergejle.sequence.iterable;
 
 import static java.util.Objects.requireNonNull;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
 public class FilteringIterable<T> extends WrappingIterable<T> {
@@ -13,6 +14,7 @@ public class FilteringIterable<T> extends WrappingIterable<T> {
         final Predicate<? super T> predicate
     ) {
         super(sourceIterable);
+        
         this.predicate = requireNonNull(predicate);
     }
 
@@ -37,6 +39,10 @@ public class FilteringIterable<T> extends WrappingIterable<T> {
 
         @Override
         public T next() {
+            if (next == null) {
+                throw new NoSuchElementException();
+            }
+            
             return next;
         }
 

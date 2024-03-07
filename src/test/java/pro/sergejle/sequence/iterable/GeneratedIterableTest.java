@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import pro.sergejle.sequence.RandomUtils;
 
-class GeneratedIterableTest extends BaseIterableTest {
+class GeneratedIterableTest extends BaseUnitTestingIterable {
 
     @RepeatedTest(value = 5, name = RepeatedTest.LONG_DISPLAY_NAME)
     @DisplayName("Should return all values from generated source list")

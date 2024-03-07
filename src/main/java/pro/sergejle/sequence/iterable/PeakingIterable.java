@@ -13,6 +13,7 @@ public class PeakingIterable<T> extends WrappingIterable<T> {
         final Consumer<? super T> action
     ) {
         super(sourceIterable);
+        
         this.action = requireNonNull(action);
     }
 

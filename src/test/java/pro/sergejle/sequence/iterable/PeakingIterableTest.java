@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import pro.sergejle.sequence.RandomUtils;
 
-class PeakingIterableTest extends BaseIterableTest {
+class PeakingIterableTest extends BaseUnitTestingIterable {
 
     @Mock
     Consumer<Integer> consumer;

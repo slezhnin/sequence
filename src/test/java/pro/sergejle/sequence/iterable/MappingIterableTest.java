@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pro.sergejle.sequence.RandomUtils;
 
-class MappingIterableTest extends BaseIterableTest {
+class MappingIterableTest extends BaseUnitTestingIterable {
 
     @Test
     @DisplayName("Should return empty result on empty source")

@@ -1,10 +1,14 @@
 package pro.sergejle.sequence.iterable;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import java.util.NoSuchElementException;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class EmptyIterableTest extends BaseIterableTest {
+class EmptyIterableTest extends BaseUnitTestingIterable {
 
     @Test
     @DisplayName("Empty Iterator next() should return false")
@@ -14,7 +18,7 @@ class EmptyIterableTest extends BaseIterableTest {
             .iterator();
 
         assertThat(actual.hasNext()).isFalse();
-        assertThat(actual.next()).isNull();
+        assertThatThrownBy(() -> actual.next()).isInstanceOf(NoSuchElementException.class); 
     }
 
     @Test

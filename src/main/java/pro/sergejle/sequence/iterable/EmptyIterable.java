@@ -1,14 +1,15 @@
 package pro.sergejle.sequence.iterable;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Spliterator;
 import java.util.Spliterators;
 
 @SuppressWarnings("unchecked")
 public class EmptyIterable<T> implements Iterable<T> {
 
-    private final static Iterable<?> EMPTY_ITERABLE = new EmptyIterable<>();
-    private final static Iterator<?> EMPTY_ITERATOR = new Iter<>();
+    private static final Iterable<?> EMPTY_ITERABLE = new EmptyIterable<>();
+    private static final Iterator<?> EMPTY_ITERATOR = new Iter<>();
 
     public static <T> Iterable<T> emptyIterable() {
         return (Iterable<T>) EMPTY_ITERABLE;
@@ -33,7 +34,7 @@ public class EmptyIterable<T> implements Iterable<T> {
 
         @Override
         public T next() {
-            return null;
+            throw new NoSuchElementException();
         }
     }
 }

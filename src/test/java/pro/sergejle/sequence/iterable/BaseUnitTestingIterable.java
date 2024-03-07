@@ -13,7 +13,7 @@ import org.mockito.junit.jupiter.MockitoSettings;
 @Tag("unit")
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = LENIENT)
-class BaseIterableTest {
+class BaseUnitTestingIterable {
 
     public <T> List<T> iterableToList(final Iterable<T> source) {
         final var actual = new ArrayList<T>();
